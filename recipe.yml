@@ -24,20 +24,20 @@ stages:
       # Put your custom actions below this comment
       # Put your custom actions below this comment
 
-      - name: packages
-        type: apt
-        sources:
-          packages:
-            - podman
-            - fish
-            - curl
-            - git
+      # - name: packages
+      #   type: apt
+      #   sources:
+      #     packages:
+      #       - podman
+      #       - fish
+      #       - curl
+      #       - git
 
-        options:
-          fixBroken: true
-          fixMissing: true
-          noRecommends: true
-          installSuggests: true
+      #   options:
+      #     fixBroken: true
+      #     fixMissing: true
+      #     noRecommends: true
+      #     installSuggests: true
 
       - name: gnome
         type: includes
