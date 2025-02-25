@@ -1,6 +1,8 @@
 name: apt-pkgs
 type: shell
 commands:
+  - apt install software-properties-common
+
   - apt-add-repository ppa:fish-shell/release-3
   - add-apt-repository ppa:boltgolt/howdy
 
