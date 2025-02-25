@@ -1,18 +1,18 @@
 name: apt-pkgs
 type: shell
 commands:
-  - apt install software-properties-common
+  - apt install -y software-properties-common
 
   - apt-add-repository ppa:fish-shell/release-3
   - add-apt-repository ppa:boltgolt/howdy
 
   - apt update
 
-  - apt install \
+  - apt install -y \
     zsh fish jq yq fzf git eza cron \
     entr xsel curl tmux ranger net-tools
 
-  - apt install \
+  - apt install -y \
     virtualenv python3-venv python3-matplotlib \
     python3-scipy python3-numpy python3-pandas python3-jinja2 python3-plotly \
     python3-pylsp-jsonrpc python3-pylsp-isort python3-pylsp-black python3-pylsp-rope \
