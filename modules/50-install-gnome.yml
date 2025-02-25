@@ -1,11 +1,20 @@
 name: gnome
 type: shell
 commands:
-  - apt update && apt install -y git wget curl \
+  - apt update && apt install -y wget curl \
     tar gnome-settings-daemon dconf-cli systemd
 
-  - git clone git@github.com:RusticBard/Neuwaita.git /usr/share/icons/Neuwaita
-  - git clone git@github.com:somepaulo/MoreWaita.git /usr/share/icons/MoreWaita
+  - wget -O /tmp/MoreWaita.zip https://github.com/somepaulo/MoreWaita/archive/refs/heads/main.zip
+  - wget -O /tmp/Neuwaita.zip https://github.com/RusticBard/Neuwaita/archive/refs/heads/main.zip
+
+  - unzip /tmp/MoreWaita.zip -d /usr/share/icons/
+  - unzip /tmp/Neuwaita.zip -d /usr/share/icons/
+
+  - mv /usr/share/icons/MoreWaita-main \
+    /usr/share/icons/MoreWaita
+
+  - mv /usr/share/icons/Neuwaita-main \
+    /usr/share/icons/Neuwaita
 
   - wget -O /tmp/adw-gtk3.tar.xz \
     $(curl -s https://api.github.com/repos/lassekongo83/adw-gtk3/releases/latest \
