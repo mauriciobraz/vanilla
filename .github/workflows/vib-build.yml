@@ -2,16 +2,16 @@ name: Vib Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     tags:
-      - '*'
+      - "*"
   schedule:
-    - cron: '21 */6 * * *'
+    - cron: "21 */6 * * *"
   pull_request:
   workflow_dispatch:
 
 env:
-  CUSTOM_IMAGE_NAME: custom
+  CUSTOM_IMAGE_NAME: vanilla
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
 
 jobs:
@@ -100,72 +100,72 @@ jobs:
       id-token: write # Additional permissions for the persistence of the attestations
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - uses: vanilla-os/vib-gh-action@v0.8.1
-      with:
-        recipe: 'recipe.yml'
-        plugins: 'Vanilla-OS/vib-fsguard:v1.5.3'
+      - uses: vanilla-os/vib-gh-action@v0.8.1
+        with:
+          recipe: "recipe.yml"
+          plugins: "Vanilla-OS/vib-fsguard:v1.5.3"
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: Containerfile
-        path: Containerfile
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Containerfile
+          path: Containerfile
 
-    - name: Generate image name
-      run: |
-        REPO_OWNER_LOWERCASE="$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')"
-        echo "REPO_OWNER_LOWERCASE=$REPO_OWNER_LOWERCASE">> "$GITHUB_ENV"
-        echo "IMAGE_URL=ghcr.io/$REPO_OWNER_LOWERCASE/${{ env.CUSTOM_IMAGE_NAME }}">> "$GITHUB_ENV"
+      - name: Generate image name
+        run: |
+          REPO_OWNER_LOWERCASE="$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')"
+          echo "REPO_OWNER_LOWERCASE=$REPO_OWNER_LOWERCASE">> "$GITHUB_ENV"
+          echo "IMAGE_URL=ghcr.io/$REPO_OWNER_LOWERCASE/${{ env.CUSTOM_IMAGE_NAME }}">> "$GITHUB_ENV"
 
-    - name: Set image info
-      run: |
-        echo -n "${{ needs.check_update.outputs.base_image }}" > ./includes.container/image-info/base-image-name
-        echo -n "${{ env.REPO_OWNER_LOWERCASE }}/${{ env.CUSTOM_IMAGE_NAME }}" > ./includes.container/image-info/image-name
+      - name: Set image info
+        run: |
+          echo -n "${{ needs.check_update.outputs.base_image }}" > ./includes.container/image-info/base-image-name
+          echo -n "${{ env.REPO_OWNER_LOWERCASE }}/${{ env.CUSTOM_IMAGE_NAME }}" > ./includes.container/image-info/image-name
 
-    - name: Docker meta
-      id: docker_meta
-      uses: docker/metadata-action@v5
-      with:
-        images: |
-          ${{ env. IMAGE_URL }}
-        tags: |
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=semver,pattern={{raw}}
-          type=semver,pattern=v{{major}}
-          type=ref,event=branch
+      - name: Docker meta
+        id: docker_meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env. IMAGE_URL }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{raw}}
+            type=semver,pattern=v{{major}}
+            type=ref,event=branch
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-    - name: Login to GitHub Package Registry
-      uses: docker/login-action@v3
-      if: ${{ github.event_name != 'pull_request' }}
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GitHub Package Registry
+        uses: docker/login-action@v3
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and Push the Docker image
-      id: push
-      uses: docker/build-push-action@v6
-      with:
-        context: .
-        file: Containerfile
-        push: ${{ github.event_name != 'pull_request' }}
-        tags: ${{ steps.docker_meta.outputs.tags }}
-        labels: ${{ steps.docker_meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        platforms: linux/amd64
-        provenance: false
+      - name: Build and Push the Docker image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Containerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64
+          provenance: false
 
-    - name: Attest pushed image
-      uses: actions/attest-build-provenance@v2
-      id: attest
-      if: ${{ github.event_name != 'pull_request' }}
-      with:
-        subject-name: ${{ env.IMAGE_URL }}
-        subject-digest: ${{ steps.push.outputs.digest }}
-        push-to-registry: false
+      - name: Attest pushed image
+        uses: actions/attest-build-provenance@v2
+        id: attest
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          subject-name: ${{ env.IMAGE_URL }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: false

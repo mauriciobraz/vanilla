@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for dir in "/.system/opt"/*; do
+    if [ -d "$dir" ]; then
+        dir_name=$(basename "$dir")
+        ln -s "$dir" "/opt/$dir_name"
+    fi
+done

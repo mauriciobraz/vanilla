@@ -1,0 +1,25 @@
+#!/bin/bash
+
+ICON_DIR_NEUWAITA="/usr/share/icons/Neuwaita"
+ICON_DIR_MOREWAITA="/usr/share/icons/MoreWaita"
+
+if [ -d "$ICON_DIR_NEUWAITA" ]; then
+    git -C "$ICON_DIR_NEUWAITA" pull --ff-only
+else
+    git clone git@github.com:RusticBard/Neuwaita.git "$ICON_DIR_NEUWAITA"
+fi
+
+if [ -d "$ICON_DIR_MOREWAITA" ]; then
+    git -C "$ICON_DIR_MOREWAITA" pull --ff-only
+else
+    git clone git@github.com:somepaulo/MoreWaita.git "$ICON_DIR_MOREWAITA"
+fi
+
+if grep -q "^Inherits=" "$INDEX_THEME_FILE"; then
+    sed -i '/^Inherits=/c\Inherits=MoreWaita, Adwaita, hicolor, breeze' "$INDEX_THEME_FILE"
+else
+    echo "Inherits=MoreWaita, Adwaita, hicolor, breeze" >> "$INDEX_THEME_FILE"
+fi
+
+gtk-update-icon-cache -f /usr/share/icons/Neuwaita
+gtk-update-icon-cache -f /usr/share/icons/MoreWaita
