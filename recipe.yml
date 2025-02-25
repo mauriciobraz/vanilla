@@ -24,11 +24,6 @@ stages:
       # Put your custom actions below this comment
       # Put your custom actions below this comment
 
-      - name: apt
-        type: includes
-        includes:
-          - modules/50-install-apt.yml
-
       - name: docker
         type: includes
         includes:
