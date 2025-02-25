@@ -1,6 +1,9 @@
 name: gnome
 type: shell
 commands:
+  - apt update && apt install -y git wget curl \
+    tar gnome-settings-daemon dconf-cli systemd
+
   - git clone git@github.com:RusticBard/Neuwaita.git /usr/share/icons/Neuwaita
   - git clone git@github.com:somepaulo/MoreWaita.git /usr/share/icons/MoreWaita
 
