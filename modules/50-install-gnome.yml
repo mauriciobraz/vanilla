@@ -1,8 +1,8 @@
 name: gnome
 type: shell
 commands:
-  - apt update && apt install -y wget curl \
-    tar gnome-settings-daemon dconf-cli systemd
+  - apt update && apt upgrade && apt install -y wget \
+    curl tar gnome-settings-daemon dconf-cli systemd
 
   - wget -O /tmp/MoreWaita.zip https://github.com/somepaulo/MoreWaita/archive/refs/heads/main.zip
   - wget -O /tmp/Neuwaita.zip https://github.com/RusticBard/Neuwaita/archive/refs/heads/main.zip
