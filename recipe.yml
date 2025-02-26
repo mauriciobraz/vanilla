@@ -1,4 +1,4 @@
-id: vesper-desktop
+id: vesper
 name: Vesper's Vanilla Desktop
 
 stages:
@@ -24,25 +24,46 @@ stages:
       # Put your custom actions below this comment
       # Put your custom actions below this comment
 
-      # - name: install-docker
-      #   type: includes
-      #   includes:
-      #     - modules/50-install-docker.yml
-
-      - name: install-gnome
+      - name: docker
         type: includes
         includes:
-          - modules/50-install-gnome.yml
+          - modules/50-install-docker.yml
 
-      - name: install-howdy
+      - name: howdy
         type: includes
         includes:
           - modules/50-install-howdy.yml
 
-      - name: install-onepassword
+      - name: onepassword
         type: includes
         includes:
           - modules/50-install-onepassword.yml
+
+      - name: packages
+        type: apt
+        sources:
+          packages:
+            - git
+            - zsh
+            - tar
+            - pax
+            - gzip
+            - curl
+            - fish
+            - cmake
+            - bzip2
+            - unrar
+            - unzip
+            - podman
+            - net-tools
+            - ncompress
+            - p7zip-full
+            - libssl-dev
+            - libffi-dev
+            - pkg-config
+            - python3-dev
+            - python3-pip
+            - build-essential
 
       - name: flatpak
         type: flatpak
@@ -51,16 +72,13 @@ stages:
           repourl: "https://flathub.org/repo/flathub.flatpakrepo"
           install:
             - "com.obsproject.Studio"
-            - "org.gtk.Gtk3theme.adw-gtk3"
             - "com.github.wwmm.easyeffects"
-            - "org.gtk.Gtk3theme.adw-gtk3-dark"
             - "com.obsproject.Studio.Plugin.DroidCam"
-          remove:
-            - "com.obsproject.Studio"
-            - "org.gtk.Gtk3theme.adw-gtk3"
-            - "com.github.wwmm.easyeffects"
-            - "org.gtk.Gtk3theme.adw-gtk3-dark"
-            - "com.obsproject.Studio.Plugin.DroidCam"
+
+      - name: ssh-trust
+        type: shell
+        commands:
+          - ssh-keyscan github.com gitlab.com >> /etc/ssh/ssh_known_hosts
 
       # Put your custom actions above this comment
       # Put your custom actions above this comment
@@ -68,7 +86,7 @@ stages:
       - name: set-image-name-abroot
         type: includes
         includes:
-          - modules/99-set-image-abroot-config.yml
+          - modules/80-set-image-abroot-config.yml
 
       - name: cleanup
         type: shell
@@ -95,5 +113,5 @@ stages:
         type: shell
         commands:
           - rm -rf /tmp/*
-          - rm -rf /var/tmp/*
           - rm -rf /sources
+          - rm -rf /var/tmp/*
