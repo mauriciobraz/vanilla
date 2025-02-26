@@ -29,10 +29,10 @@ stages:
         includes:
           - modules/50-install-warp.yml
 
-      - name: install-docker
-        type: includes
-        includes:
-          - modules/50-install-docker.yml
+      # - name: install-docker
+      #   type: includes
+      #   includes:
+      #     - modules/50-install-docker.yml
 
       - name: install-gnome
         type: includes
