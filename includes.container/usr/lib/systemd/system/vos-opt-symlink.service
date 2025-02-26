@@ -1,5 +1,5 @@
 [Unit]
-Description=Create symbolic links for directories in /opt/ (Vanilla OS Workaround https://github.com/Vanilla-OS/ABRoot/issues/221)
+Description=Create symbolic links for directories in /opt/ (Vanilla OS Workaround, see https://github.com/Vanilla-OS/ABRoot/issues/221)
 After=local-fs.target
 
 [Service]
