@@ -1,0 +1,7 @@
+name: howdy
+type: shell
+commands:
+  - add-apt-repository ppa:boltgolt/howdy
+  - apt update
+
+  - apt install -y howdy

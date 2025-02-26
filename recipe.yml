@@ -1,4 +1,4 @@
-id: vesper
+id: vesper-desktop
 name: Vesper's Vanilla Desktop
 
 stages:
@@ -24,10 +24,48 @@ stages:
       # Put your custom actions below this comment
       # Put your custom actions below this comment
 
-      - name: onepassword
+      - name: install-warp
+        type: includes
+        includes:
+          - modules/50-install-warp.yml
+
+      - name: install-docker
+        type: includes
+        includes:
+          - modules/50-install-docker.yml
+
+      - name: install-gnome
+        type: includes
+        includes:
+          - modules/50-install-gnome.yml
+
+      - name: install-howdy
+        type: includes
+        includes:
+          - modules/50-install-howdy.yml
+
+      - name: install-onepassword
         type: includes
         includes:
           - modules/50-install-onepassword.yml
+
+      - name: flatpak
+        type: flatpak
+        system:
+          reponame: "flathub"
+          repourl: "https://flathub.org/repo/flathub.flatpakrepo"
+          install:
+            - "com.obsproject.Studio"
+            - "org.gtk.Gtk3theme.adw-gtk3"
+            - "com.github.wwmm.easyeffects"
+            - "org.gtk.Gtk3theme.adw-gtk3-dark"
+            - "com.obsproject.Studio.Plugin.DroidCam"
+          remove:
+            - "com.obsproject.Studio"
+            - "org.gtk.Gtk3theme.adw-gtk3"
+            - "com.github.wwmm.easyeffects"
+            - "org.gtk.Gtk3theme.adw-gtk3-dark"
+            - "com.obsproject.Studio.Plugin.DroidCam"
 
       # Put your custom actions above this comment
       # Put your custom actions above this comment
@@ -35,7 +73,7 @@ stages:
       - name: set-image-name-abroot
         type: includes
         includes:
-          - modules/80-set-image-abroot-config.yml
+          - modules/99-set-image-abroot-config.yml
 
       - name: cleanup
         type: shell
@@ -62,5 +100,5 @@ stages:
         type: shell
         commands:
           - rm -rf /tmp/*
-          - rm -rf /sources
           - rm -rf /var/tmp/*
+          - rm -rf /sources

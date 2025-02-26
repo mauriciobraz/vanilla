@@ -1,0 +1,8 @@
+[Unit]
+After=network.target
+Description=Auto-update icons from remote repository
+
+[Service]
+User=root
+Type=oneshot
+ExecStart=/usr/local/bin/update-icons.sh

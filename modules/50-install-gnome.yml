@@ -1,0 +1,25 @@
+name: gnome
+type: shell
+commands:
+  - git clone git@github.com:RusticBard/Neuwaita.git /usr/share/icons/Neuwaita
+  - git clone git@github.com:somepaulo/MoreWaita.git /usr/share/icons/MoreWaita
+
+  - wget -O /tmp/adw-gtk3.tar.xz \
+    $(curl -s https://api.github.com/repos/lassekongo83/adw-gtk3/releases/latest \
+    | grep "browser_download_url" | grep ".tar.xz" | cut -d '"' -f 4)
+
+  - find "/usr/share/icons/MoreWaita" -mindepth 1 \
+    \( -name "*.build" -o -name "*.sh" -o -name "*.py" -o -name "*.md" \
+    -o -name ".git" -o -name ".github" -o -name ".gitignore" -o -name "_dev" \) \
+    -exec rm -rf {} +
+
+  - sed -i '/^Inherits=/ s/=\(.*\)/=MoreWaita, \1/' \
+    /usr/share/icons/Neuwaita/index.theme
+
+  - tar -xf /tmp/adw-gtk3.tar.xz -C /usr/share/themes
+
+  - gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
+  - gsettings set org.gnome.desktop.interface icon-theme 'Neuwaita'
+  - gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
+  - systemctl enable --now update-icons.timer
