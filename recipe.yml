@@ -78,15 +78,8 @@ stages:
             branch: beta
             type: git
         buildflags:
-          - "-Dprefix=/usr"
-          - "-Dfetch_dlib_data=true"
-          - "-Dpam_dir=/usr/lib/pam"
-          - "-Dconfig_dir=/etc/howdy"
-          - "-Dlog_path=/var/log/howdy"
-          - "-Dinstall_pam_config=true"
-          - "-Dpython_path=/usr/bin/python3"
-          - "-Duser_models_dir=/var/lib/howdy/models"
           - "--buildtype=release"
+          - "-Dinstall_pam_config=true"
 
       # Finalization
       # Finalization
