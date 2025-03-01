@@ -33,15 +33,13 @@ stages:
           - packages:
               - apt-transport-https
               - build-essential
-              - build-essential
+              - bzip2
               - ca-certificates
-              - cmake
               - cmake
               - libevdev-dev
               - libinih-dev
               - libopencv-dev
               - libpam0g-dev
-              - make
               - make
               - meson
               - ninja-build
@@ -80,6 +78,15 @@ stages:
         buildflags:
           - "--buildtype=release"
           - "-Dinstall_pam_config=true"
+
+      - name: dlib
+        type: shell
+        commands:
+          - mkdir -p /usr/local/share/dlib-data
+          - curl --location --retry 5 --output /usr/local/share/dlib-data/mmod_human_face_detector.dat.bz2 https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
+          - curl --location --retry 5 --output /usr/local/share/dlib-data/shape_predictor_5_face_landmarks.dat.bz2 https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
+          - curl --location --retry 5 --output /usr/local/share/dlib-data/dlib_face_recognition_resnet_model_v1.dat.bz2 https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2
+          - bzip2 -d -f /usr/local/share/dlib-data/*.bz2
 
       # Finalization
       # Finalization
