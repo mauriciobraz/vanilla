@@ -120,8 +120,8 @@ jobs:
 
       - name: Set image info
         run: |
-          echo -n "${{ needs.check_update.outputs.base_image }}" > ./includes.container/image-info/base-image-name
-          echo -n "${{ env.REPO_OWNER_LOWERCASE }}/${{ env.CUSTOM_IMAGE_NAME }}" > ./includes.container/image-info/image-name
+          echo -n "${{ needs.check_update.outputs.base_image }}" > ./includes/image-info/base-image-name
+          echo -n "${{ env.REPO_OWNER_LOWERCASE }}/${{ env.CUSTOM_IMAGE_NAME }}" > ./includes/image-info/image-name
 
       - name: Docker meta
         id: docker_meta
