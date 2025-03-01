@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Creates Flatpak Aliases
+Exec=/usr/bin/create-flatpak-aliases
+StartupNotify=false
+Type=Application
+NoDisplay=true

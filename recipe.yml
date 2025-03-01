@@ -1,94 +1,117 @@
-id: vesper
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mauriciobraz/vos/refs/heads/main/schemas/recipe.json
+
+id: vesper-vanilla-desktop
 name: Vesper's Vanilla Desktop
 
 stages:
   - id: build
     base: ghcr.io/vanilla-os/desktop:main
-    singlelayer: false
-    labels:
-      maintainer: Maurício Braz
+
     args:
       DEBIAN_FRONTEND: noninteractive
+
+    labels:
+      maintainer: Maurício Braz
+
+    addincludes: true
+    singlelayer: false
 
     runs:
       commands:
         - echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
 
     modules:
-      - name: init-setup
+      - name: init
         type: shell
         commands:
           - lpkg --unlock
           - apt-get update
 
-      # Put your custom actions below this comment
-      # Put your custom actions below this comment
-
-      - name: docker
-        type: includes
-        includes:
-          - modules/50-install-docker.yml
-
-      - name: howdy
-        type: includes
-        includes:
-          - modules/50-install-howdy.yml
-
-      - name: onepassword
-        type: includes
-        includes:
-          - modules/50-install-onepassword.yml
-
-      - name: packages
+      - name: pkgs
         type: apt
         sources:
-          packages:
-            - git
-            - zsh
-            - tar
-            - pax
-            - gzip
-            - curl
-            - fish
-            - cmake
-            - bzip2
-            - unrar
-            - unzip
-            - podman
-            - net-tools
-            - ncompress
-            - p7zip-full
-            - libssl-dev
-            - libffi-dev
-            - pkg-config
-            - python3-dev
-            - python3-pip
-            - build-essential
+          - packages:
+              - apt-transport-https
+              - build-essential
+              - build-essential
+              - ca-certificates
+              - cmake
+              - cmake
+              - libevdev-dev
+              - libinih-dev
+              - libopencv-dev
+              - libpam0g-dev
+              - make
+              - make
+              - meson
+              - ninja
+              - python3
+              - python3-dev
+              - python3-pip
+              - python3-setuptools
+              - python3-wheel
 
-      - name: flatpak
-        type: flatpak
-        system:
-          reponame: "flathub"
-          repourl: "https://flathub.org/repo/flathub.flatpakrepo"
-          install:
-            - "com.obsproject.Studio"
-            - "com.github.wwmm.easyeffects"
-            - "com.obsproject.Studio.Plugin.DroidCam"
-
-      - name: ssh-trust
+      - name: chmod
         type: shell
         commands:
-          - ssh-keyscan github.com gitlab.com >> /etc/ssh/ssh_known_hosts
+          - chmod +x /usr/bin/vos-opt-symlink
+          - chmod +x /usr/bin/op-browser-support
+          - chmod +x /usr/bin/create-flatpak-aliases
 
-      # Put your custom actions above this comment
-      # Put your custom actions above this comment
+      - name: one-password
+        type: shell
+        commands:
+          - mkdir -p /etc/debsig/policies/AC2D62742012EA22/
+          - mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22/
 
-      - name: set-image-name-abroot
-        type: includes
-        includes:
-          - modules/80-set-image-abroot-config.yml
+          - curl -sS https://downloads.1password.com/linux/keys/1password.asc \
+            | gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
 
-      - name: cleanup
+          - cat <<EOF | tee /etc/apt/sources.list.d/1password.list
+            deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] \
+            https://downloads.1password.com/linux/debian/amd64 stable main
+            EOF
+
+          - curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol \
+            | tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
+
+          - curl -sS https://downloads.1password.com/linux/keys/1password.asc \
+            | gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+
+          - apt update && apt install -y 1password 1password-cli
+          - systemctl enable vos-opt-symlink.service
+
+      - name: howdy
+        type: meson
+        sources:
+          - url: https://github.com/boltgolt/howdy.git
+            commit: aef35b526e4fef082f4bbfd6ffb5cbbc520ff629
+            branch: beta
+            type: git
+        buildflags:
+          - "-Dprefix=/usr"
+          - "-Dfetch_dlib_data=true"
+          - "-Dpam_dir=/usr/lib/pam"
+          - "-Dconfig_dir=/etc/howdy"
+          - "-Dlog_path=/var/log/howdy"
+          - "-Dinstall_pam_config=true"
+          - "-Dpython_path=/usr/bin/python3"
+          - "-Duser_models_dir=/var/lib/howdy/models"
+          - "--buildtype=release"
+
+      # Finalization
+      # Finalization
+
+      - name: image-name
+        type: shell
+        commands:
+          - IMAGE_NAME="$(cat /image-info/image-name)"
+          - echo custom image name "$IMAGE_NAME"
+          - IMAGE_NAME_ESCAPED="$(echo $IMAGE_NAME | sed 's/\//\\\//g')"
+          - sed -i "s/changed_automatically_by_vib/$IMAGE_NAME_ESCAPED/g" /usr/share/abroot/abroot.json
+          - rm -rf /image-info
+
+      - name: cleanse
         type: shell
         commands:
           - apt-get autoremove -y
@@ -97,10 +120,13 @@ stages:
 
       - name: fsguard
         type: fsguard
+
         GenerateKey: true
         CustomFsGuard: false
+
         FilelistPaths: ["/usr/bin"]
         FsGuardLocation: "/usr/sbin/FsGuard"
+
         modules:
           - name: remove-prev-fsguard
             type: shell
@@ -109,9 +135,12 @@ stages:
               - rm -f ./minisign.pub ./minisign.key
               - chmod +x /usr/sbin/init
 
-      - name: cleanup2
+      - name: cleanse
         type: shell
         commands:
           - rm -rf /tmp/*
           - rm -rf /sources
           - rm -rf /var/tmp/*
+
+vibversion: 1.0.0
+includespath: includes

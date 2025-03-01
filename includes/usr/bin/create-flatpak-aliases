@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ -z "$USER" ]; then
+	exit 1
+fi
+
+flatpak_apps=(
+	"dev.zed.Zed:zed,zedit"
+	"com.microsoft.Edge:edge"
+	"com.brave.Browser:brave"
+	"com.google.Chrome:chrome"
+	"org.mozilla.firefox:firefox"
+	"org.chromium.Chromium:chromium"
+	"io.gitlab.librewolf-community:librewolf"
+	"com.jetbrains.PyCharm-Community:pycharm,pycharm-community"
+)
+
+arch=$(uname -m)
+aliases_dir="$HOME/.local/bin"
+
+for app in ${flatpak_apps[@]}; do
+	IFS=':' read -r app_id aliases <<< ${app}
+	IFS=',' read -ra aliases_list <<< ${aliases}
+
+	app_id=$(echo ${app_id} | xargs)
+
+	if [ -z "$app_id" ] || [ ${#aliases_list[@]} -eq 0 ]; then
+	continue
+	fi
+
+	if ! flatpak list --columns=application --all | grep -q "^${app_id}\$"; then
+	continue
+	fi
+
+	for alias_name in ${aliases_list[@]}; do
+		cat <<- EOF > ${aliases_dir}/$(echo ${alias_name} | xargs)
+			#!/bin/bash
+			exec flatpak run --branch=stable --arch=$(uname -m) ${app_id} "\$@"
+		EOF
+	done
+done
