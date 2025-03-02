@@ -1,0 +1,10 @@
+type: shell
+name: ir-emitter-enable
+commands:
+  - |
+    wget -q -P /sources \
+      $(curl -s https://api.github.com/repos/EmixamPP/linux-enable-ir-emitter/releases/latest \
+        | jq -r '.assets[] | select(.name | contains("tar.gz")).browser_download_url')
+  - tar -C / --no-same-owner -m -h -xzf /sources/linux-enable-ir-emitter*.tar.gz
+  - rm -f /sources/linux-enable-ir-emitter*.tar.gz
+  - systemctl enable linux-enable-ir-emitter

@@ -45,6 +45,7 @@ stages:
           - modules/1010-warp.yml
           - modules/2020-howdy.yml
           - modules/3030-1password.yml
+          - modules/4040-linux-enable-ir-emitter.yml
 
       # Cleanups
       # Cleanups
