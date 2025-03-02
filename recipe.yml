@@ -68,7 +68,7 @@ stages:
           - apt update && apt install -y 1password 1password-cli
           - systemctl enable vos-opt-symlink.service
 
-      - name: howdy
+      - name: howdy-build
         type: meson
         sources:
           - url: https://github.com/boltgolt/howdy.git
@@ -91,8 +91,6 @@ stages:
 
           - ln -sf /.system/usr/local/etc/howdy/models /usr/local/etc/howdy/models
           - ln -sf /.system/usr/local/etc/howdy/config /usr/local/etc/howdy/config
-
-          - pip3 install -U opencv-python opencv-python-headless python-pam evdev numpy scipy matplotlib dlib
 
           - curl --location --retry 5 --output /.system/usr/local/share/dlib-data/mmod_human_face_detector.dat.bz2 https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
           - curl --location --retry 5 --output /.system/usr/local/share/dlib-data/shape_predictor_5_face_landmarks.dat.bz2 https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
