@@ -1,0 +1,11 @@
+[Unit]
+Description=Fix Cedilla for Current User
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/fix-cedilla
+RemainAfterExit=true
+
+[Install]
+WantedBy=default.target

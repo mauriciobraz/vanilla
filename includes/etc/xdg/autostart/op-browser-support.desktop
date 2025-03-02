@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=1Password Browser-Support
-Exec=/usr/bin/op-browser-support
-StartupNotify=false
-Type=Application
-NoDisplay=true

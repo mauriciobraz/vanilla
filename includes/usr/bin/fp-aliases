@@ -37,5 +37,7 @@ for app in ${flatpak_apps[@]}; do
 			#!/bin/bash
 			exec flatpak run --branch=stable --arch=$(uname -m) ${app_id} "\$@"
 		EOF
+
+		chmod +x ${aliases_dir}/$(echo ${alias_name} | xargs)
 	done
 done

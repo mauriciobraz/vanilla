@@ -40,6 +40,7 @@ stages:
               - libinih-dev
               - libopencv-dev
               - libpam0g-dev
+              - lsb-release
               - make
               - meson
               - ninja-build
@@ -48,6 +49,7 @@ stages:
               - python3-pip
               - python3-setuptools
               - python3-wheel
+              - wget
 
       - name: chmod
         type: shell
@@ -55,6 +57,13 @@ stages:
           - chmod +x /usr/bin/vos-opt-symlink
           - chmod +x /usr/bin/op-browser-support
           - chmod +x /usr/bin/create-flatpak-aliases
+
+      - name: cloudflare-warp
+        type: shell
+        commands:
+          - curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          - echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list
+          - apt-get update && apt-get install -y cloudflare-warp
 
       - name: one-password
         type: shell
@@ -68,6 +77,13 @@ stages:
           - apt update && apt install -y 1password 1password-cli
           - systemctl enable vos-opt-symlink.service
 
+      - name: howdy-links
+        type: shell
+        commands:
+          - mkdir -p /etc/local/howdy
+          - ln -sfn /etc/local/howdy /usr/local/etc/howdy
+          - ln -sfn /etc/local/dlib-data /usr/local/share/dlib-data
+
       - name: howdy-build
         type: meson
         sources:
@@ -78,6 +94,17 @@ stages:
         buildflags:
           - "--buildtype=release"
           - "-Dinstall_pam_config=true"
+          - "-Dconfig_dir=/etc/local/howdy"
+          - "-Ddlib_data_dir=/etc/local/dlib-data"
+
+      - name: howdy-models
+        type: shell
+        commands:
+          - mkdir -p /etc/local/dlib-data
+          - wget -P /etc/local/dlib-data https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2
+          - wget -P /etc/local/dlib-data https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
+          - wget -P /etc/local/dlib-data https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
+          - bzip2 -d /etc/local/dlib-data/*.bz2
 
       # Finalization
       # Finalization

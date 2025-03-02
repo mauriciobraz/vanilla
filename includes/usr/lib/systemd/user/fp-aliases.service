@@ -1,0 +1,11 @@
+[Unit]
+Description=Flatpak Aliases
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/fp-aliases
+RemainAfterExit=true
+
+[Install]
+WantedBy=default.target
