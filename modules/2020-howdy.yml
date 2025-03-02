@@ -1,0 +1,13 @@
+type: meson
+name: howdy
+buildflags:
+  - "--buildtype=release"
+  - "-Dinstall_pam_config=true"
+  - "-Dconfig_dir=/etc/local/howdy"
+  - "-Dlog_path=/etc/local/howdy/log"
+  - "-Ddlib_data_dir=/etc/local/dlib-data"
+sources:
+  - url: https://github.com/boltgolt/howdy.git
+    commit: aef35b526e4fef082f4bbfd6ffb5cbbc520ff629
+    branch: beta
+    type: git
