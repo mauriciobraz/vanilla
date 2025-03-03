@@ -30,13 +30,15 @@ stages:
       # Customs
       # Customs
 
-      - name: chmod
+      - name: perms
         type: shell
         commands:
           - chmod +x /usr/bin/fp-aliases
           - chmod +x /usr/bin/fix-cedilla
           - chmod +x /usr/bin/vos-opt-symlink
           - chmod +x /usr/bin/op-browser-support
+          - chmod 644 /etc/pam.d/common-auth /etc/pam.d/gdm-password
+          - chown root:root /etc/pam.d/common-auth /etc/pam.d/gdm-password
 
       - name: includes
         type: includes

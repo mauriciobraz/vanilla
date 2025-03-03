@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$USER" ]; then
-	exit 1
+	exit 0
 fi
 
 flatpak_apps=(
@@ -25,11 +25,11 @@ for app in ${flatpak_apps[@]}; do
 	app_id=$(echo ${app_id} | xargs)
 
 	if [ -z "$app_id" ] || [ ${#aliases_list[@]} -eq 0 ]; then
-	continue
+		continue
 	fi
 
 	if ! flatpak list --columns=application --all | grep -q "^${app_id}\$"; then
-	continue
+		continue
 	fi
 
 	for alias_name in ${aliases_list[@]}; do
