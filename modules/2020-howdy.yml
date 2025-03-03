@@ -6,7 +6,7 @@
 #     su
 
 type: apt
-name: howdy
+name: apt
 
 sources:
   - packages:
@@ -33,7 +33,7 @@ sources:
 
 modules:
   - type: cmake
-    name: howdy__dlib
+    name: dlib
     source:
       type: git
       branch: master
@@ -42,7 +42,7 @@ modules:
     buildflags: "-fPIC -DCMAKE_BUILD_TYPE=Release"
 
   - type: meson
-    name: howdy__howdy
+    name: howdy
     sources:
       - type: git
         branch: beta
