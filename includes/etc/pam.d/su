@@ -1,0 +1,24 @@
+#
+# /etc/pam.d/su - User privilege escalation configuration
+#
+
+# Facial recognition (Howdy)
+auth    sufficient      pam_howdy.so
+
+# Allow root to `su` without password
+auth    sufficient      pam_rootok.so
+
+# Optional: Restrict `su` to wheel group members
+# auth    required      pam_wheel.so
+
+# Session and environment setup
+session required        pam_env.so readenv=1
+session required        pam_env.so readenv=1 envfile=/etc/default/locale
+session required        pam_limits.so
+session optional        pam_mail.so nopen
+
+# Shared authentication rules
+@include common-auth
+@include common-account
+@include common-session
+@include common-password

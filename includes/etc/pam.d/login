@@ -1,0 +1,31 @@
+#
+# /etc/pam.d/login - Console/tty login configuration
+#
+
+# Facial recognition (Howdy)
+auth    sufficient      pam_howdy.so
+
+# Security and session policies
+auth    optional        pam_faildelay.so delay=3000000  # 3-second failure delay
+auth    requisite       pam_nologin.so                  # Honor /etc/nologin
+
+# SELinux context management
+session [success=ok...] pam_selinux.so close
+session required        pam_loginuid.so
+session [success=ok...] pam_selinux.so open
+
+# Environment and resource limits
+session required        pam_env.so readenv=1
+session required        pam_env.so readenv=1 envfile=/etc/default/locale
+session required        pam_limits.so
+
+# Message of the day and mail checks
+session optional        pam_motd.so motd=/run/motd.dynamic
+session optional        pam_motd.so noupdate
+session optional        pam_mail.so standard
+
+# Shared authentication rules
+@include common-auth
+@include common-account
+@include common-session
+@include common-password
