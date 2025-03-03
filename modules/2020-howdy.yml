@@ -36,7 +36,7 @@ modules:
     name: howdy/dlib
     source:
       type: git
-      branch: master
+      branch: masterz
       commit: d352013
       url: https://github.com/davisking/dlib.git
     buildflags: "-DCMAKE_CXX_FLAGS=-O3 -mtune=generic -fPIC -DCMAKE_BUILD_TYPE=Release -G Ninja"
@@ -44,10 +44,10 @@ modules:
   - type: meson
     name: howdy/howdy
     sources:
-      type: git
-      branch: beta
-      commit: aef35b5
-      url: https://github.com/boltgolt/howdy.git
+      - type: git
+        branch: beta
+        commit: aef35b5
+        url: https://github.com/boltgolt/howdy.git
     buildflags:
       - "--buildtype=release"
       - "-Dinstall_pam_config=true"
