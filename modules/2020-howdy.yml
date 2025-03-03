@@ -36,7 +36,7 @@ modules:
     name: howdy/dlib
     source:
       type: git
-      branch: masterz
+      branch: master
       commit: d352013
       url: https://github.com/davisking/dlib.git
     buildflags: "-DCMAKE_CXX_FLAGS=-O3 -mtune=generic -fPIC -DCMAKE_BUILD_TYPE=Release -G Ninja"
