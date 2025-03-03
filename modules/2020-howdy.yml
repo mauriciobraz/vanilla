@@ -36,10 +36,7 @@ modules:
     name: howdy/dlib
     source:
       { type: git, url: https://github.com/davisking/dlib.git, commit: d352013 }
-    buildflags:
-      - "-DCMAKE_CXX_FLAGS=-O3 -mtune=generic -fPIC"
-      - "-DCMAKE_BUILD_TYPE=Release"
-      - "-G Ninja"
+    buildflags: "-DCMAKE_CXX_FLAGS=-O3 -mtune=generic -fPIC -DCMAKE_BUILD_TYPE=Release -G Ninja"
 
   - type: meson
     name: howdy/howdy
