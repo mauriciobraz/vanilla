@@ -33,16 +33,16 @@ sources:
 
 modules:
   - type: cmake
-    name: howdy/dlib
+    name: howdy__dlib
     source:
       type: git
       branch: master
       commit: d352013
       url: https://github.com/davisking/dlib.git
-    buildflags: "-DCMAKE_CXX_FLAGS=-O3 -mtune=generic -fPIC -DCMAKE_BUILD_TYPE=Release -G Ninja"
+    buildflags: "-fPIC -DCMAKE_BUILD_TYPE=Release"
 
   - type: meson
-    name: howdy/howdy
+    name: howdy__howdy
     sources:
       - type: git
         branch: beta
@@ -56,7 +56,7 @@ modules:
       - "-Duser_models_dir=/etc/howdy/models"
 
   - type: shell
-    name: howdy/dlib-pam
+    name: howdy__dlib-pam
     commands:
       - |
         mkdir -p /etc/local/dlib  \
@@ -70,7 +70,7 @@ modules:
         bunzip2 -f *.bz2 \
 
   - type: shell
-    name: howdy/ir-emitter
+    name: howdy__ir-emitter
     commands:
       - |
         wget -q -P /sources \
@@ -81,7 +81,7 @@ modules:
       - systemctl enable linux-enable-ir-emitter
 
   - type: shell
-    name: howdy/perms
+    name: howdy__perms
     commands:
       - chmod 644 /etc/pam.d/*
       - chown root:root /etc/pam.d/*
