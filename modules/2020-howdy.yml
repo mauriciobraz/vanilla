@@ -59,16 +59,14 @@ modules:
     name: howdy/dlib-pam
     commands:
       - |
-        DLIB_MODELS=(
-          https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
-          https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
-          https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2
-        )
-
-        ln -s $(find / -type f -name pam_howdy.so 2>/dev/null) /usr/lib/x86_64-linux-gnu/security/pam_howdy.so
-
-        mkdir -p /etc/local/dlib && cd /etc/local/dlib
-        wget -nc "${DLIB_MODELS[@]}"
+        DLIB_MODELS=( \
+          https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2 \
+          https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2 \
+          https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2 \
+        ) \
+        ln -s $(find / -type f -name pam_howdy.so 2>/dev/null) /usr/lib/x86_64-linux-gnu/security/pam_howdy.so \
+        mkdir -p /etc/local/dlib && cd /etc/local/dlib \
+        wget -nc "${DLIB_MODELS[@]}" \
         bunzip2 -f *.bz2 \
 
   - type: shell
