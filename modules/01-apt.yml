@@ -11,6 +11,7 @@ sources:
       - cmake
       - curl
       - dirmngr
+      - fish
       - freeglut3-dev
       - git
       - git-lfs
