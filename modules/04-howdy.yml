@@ -9,7 +9,7 @@ buildflags:
   - "--buildtype=release"
   - "-Dinstall_pam_config=true"
   - "-Dconfig_dir=/etc/howdy"
-  - "-Ddlib_data_dir=/etc/local/dlib"
+  - "-Ddlib_data_dir=/etc/dlib"
   - "-Duser_models_dir=/etc/howdy/models"
 modules:
   - type: shell
