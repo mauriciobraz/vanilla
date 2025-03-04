@@ -17,9 +17,6 @@ modules:
     commands:
       - chmod 644 /etc/pam.d/*
       - chown root:root /etc/pam.d/*
-      - chmod 644 /etc/local/howdy/*
-      - chmod 644 /etc/local/dlib/*.dat
-      - chmod 755 /etc/local/{howdy,dlib}
       - chmod 755 /usr/lib/x86_64-linux-gnu/security{,/pam_howdy.so}
       - pip3 install dlib --upgrade --break-system-packages --no-cache-dir
       - ln -s $(find / -type f -name pam_howdy.so 2>/dev/null) /usr/lib/x86_64-linux-gnu/security/pam_howdy.so
