@@ -1,0 +1,8 @@
+type: cmake
+name: dlib
+source:
+  type: git
+  branch: master
+  commit: d352013
+  url: https://github.com/davisking/dlib.git
+buildflags: "-fPIC -DCMAKE_BUILD_TYPE=Release"

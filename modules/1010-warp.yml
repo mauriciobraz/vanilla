@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/mauriciobraz/vos/refs/heads/main/schemas/module.json
-
-type: shell
-name: cloudflare-warp
-commands:
-  - curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-  - echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ bookworm main" | tee /etc/apt/sources.list.d/cloudflare-client.list # <button class="citation-flag" data-index="4">
-  - apt update && apt install -y cloudflare-warp

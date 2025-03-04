@@ -30,23 +30,15 @@ stages:
       # Customs
       # Customs
 
-      - name: perms
-        type: shell
-        commands:
-          - chmod +x /usr/bin/fp-aliases
-          - chmod +x /usr/bin/fix-cedilla
-          - chmod +x /usr/bin/vos-opt-symlink
-          - chmod +x /usr/bin/op-browser-support
-          - chmod 644 /etc/pam.d/common-auth /etc/pam.d/gdm-password
-          - chown root:root /etc/pam.d/common-auth /etc/pam.d/gdm-password
-
       - name: includes
         type: includes
         includes:
-          - modules/0101-pkgs.yml
-          - modules/1010-warp.yml
-          - modules/2020-howdy.yml
-          - modules/3030-1password.yml
+          - modules/01-apt.yml
+          - modules/02-dlib.yml
+          - modules/03-warp.yml
+          - modules/04-howdy.yml
+          - modules/05-iremitter.yml
+          - modules/06-1password.yml
 
       # Cleanups
       # Cleanups
