@@ -15,7 +15,6 @@ sources:
       - git
       - git-lfs
       - gnupg
-      - libatlas-base-dev
       - libboost-python-dev
       - libevdev-dev
       - libgl1
