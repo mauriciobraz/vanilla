@@ -5,8 +5,8 @@
 #     login
 #     su
 
+name: ""
 type: apt
-name: apt
 
 sources:
   - packages:
