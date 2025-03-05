@@ -12,7 +12,6 @@ sources:
       - curl
       - dirmngr
       - freeglut3-dev
-      - fzf
       - git
       - git-lfs
       - gnupg
@@ -53,3 +52,5 @@ sources:
       - software-properties-common
       - v4l-utils
       - wget
+      - fish
+      - fzf

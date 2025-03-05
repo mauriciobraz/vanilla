@@ -27,6 +27,8 @@ stages:
           - lpkg --unlock
           - apt-get update
           - apt-get upgrade -y
+          - echo 'deb http://download.opensuse.org/repositories/shells:/fish/Debian_10/ /' | sudo tee /etc/apt/sources.list.d/shells:fish.list
+          - curl -fsSL https://download.opensuse.org/repositories/shells:fish/Debian_10/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish.gpg > /dev/null
 
       # Customs
       # Customs
@@ -40,13 +42,6 @@ stages:
           - modules/04-howdy.yml
           - modules/05-iremitter.yml
           - modules/06-1password.yml
-
-      - name: fish
-        type: cmake
-        source:
-          type: git
-          branch: master
-          url: https://github.com/fish-shell/fish-shell.git
 
       - name: chsh
         type: shell
