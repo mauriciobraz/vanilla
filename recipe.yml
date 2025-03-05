@@ -42,6 +42,12 @@ stages:
           - modules/06-1password.yml
 
       - name: fish
+        type: cmake
+        source:
+          type: git
+          url: https://github.com/fish-shell/fish-shell.git
+
+      - name: chsh
         type: shell
         commands:
           - chsh -s $(which fish)
