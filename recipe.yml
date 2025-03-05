@@ -43,10 +43,12 @@ stages:
           - modules/05-iremitter.yml
           - modules/06-1password.yml
 
-      - name: chsh
+      - name: shell
         type: shell
         commands:
+          - rm -rf /etc/fish
           - chsh -s $(which fish)
+          - mv /etc/fish-c /etc/fish
 
       # Cleanups
       # Cleanups
