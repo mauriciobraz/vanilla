@@ -1,5 +1,5 @@
-name: shell
-type: fstab
+name: fstab
+type: shell
 commands:
   - mkdir -p /mnt/ressonance
   - chmod 755 /mnt/ressonance
