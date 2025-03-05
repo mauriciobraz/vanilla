@@ -34,10 +34,16 @@ stages:
         type: includes
         includes:
           - modules/01-apt.yml
+          - modules/02-mnts.yml
           - modules/03-warp.yml
           - modules/04-howdy.yml
           - modules/05-iremitter.yml
           - modules/06-1password.yml
+
+      - name: fish
+        type: shell
+        commands:
+          - chsh -s $(which fish)
 
       # Cleanups
       # Cleanups

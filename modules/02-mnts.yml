@@ -1,0 +1,6 @@
+name: shell
+type: fstab
+commands:
+  - mkdir -p /mnt/ressonance
+  - chmod 755 /mnt/ressonance
+  - echo "UUID=53ce0bc4-72ff-4def-a74d-f793dfb09a7b /mnt/ressonance ext4 defaults,nofail 0 0" | tee -a /etc/fstab

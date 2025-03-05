@@ -13,6 +13,7 @@ sources:
       - dirmngr
       - fish
       - freeglut3-dev
+      - fzf
       - git
       - git-lfs
       - gnupg
@@ -32,6 +33,8 @@ sources:
       - make
       - meld
       - meson
+      - micro
+      - net-tools
       - ninja-build
       - openssl
       - pkg-config

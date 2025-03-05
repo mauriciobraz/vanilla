@@ -1,0 +1,10 @@
+complete -c change-mac -x -a "(__fish_print_interfaces)"
+complete -c change-mac -s i -l interface -x -a "(__fish_print_interfaces)" -d "Select network interface to use"
+complete -c change-mac -s r -l random -d "Generate random valid MAC (default)"
+complete -c change-mac -s d -l decrement -d "Decrease MAC by 1"
+complete -c change-mac -s m -l mac -x -d "Set specific MAC address"
+complete -c change-mac -s h -l help -d "Show help"
+
+complete -c rmac -x -a "(__fish_print_interfaces)"
+complete -c rmac -s i -l interface -x -a "(__fish_print_interfaces)" -d "Select network interface to use"
+complete -c rmac -s h -l help -d "Show help"
