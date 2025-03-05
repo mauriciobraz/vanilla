@@ -47,6 +47,8 @@ stages:
           - rm -rf /etc/fish
           - chsh -s $(which fish)
           - mv /etc/fish-c /etc/fish
+          - vso completion fish > /etc/fish/completions/vso.fish
+          - abroot completion fish > /etc/fish/completions/abroot.fish
 
       # Cleanups
       # Cleanups
