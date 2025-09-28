@@ -35,7 +35,7 @@ jobs:
       - name: Read base image name from recipe
         id: read_base_recipe
         run: |
-          BASE_IMAGE="$(fy-filter -f recipe.yml /stages/-1/base)"
+          BASE_IMAGE="$(fy-filter -f recipe.yaml /stages/-1/base)"
           echo The base image is $BASE_IMAGE
           if [ -z $BASE_IMAGE ]; then exit 1; fi
           echo "base_image=$BASE_IMAGE" >> "$GITHUB_OUTPUT"
@@ -104,7 +104,7 @@ jobs:
 
       - uses: vanilla-os/vib-gh-action@v1.0.2
         with:
-          recipe: "recipe.yml"
+          recipe: "recipe.yaml"
           plugins: "Vanilla-OS/vib-fsguard:v1.6.1"
 
       - uses: actions/upload-artifact@v4
