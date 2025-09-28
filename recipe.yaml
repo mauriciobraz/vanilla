@@ -32,21 +32,45 @@ stages:
           - modules/14-dx-imports.yaml
           - modules/15-ux-imports.yaml
 
-      - type: fsguard
-        name: fsguard
+      - name: add-image-name
+        type: shell
+        commands:
+          - IMAGE_NAME="$(cat /image-info/image-name)"
+          - echo custom image name "$IMAGE_NAME"
+          - IMAGE_NAME_ESCAPED="$(echo $IMAGE_NAME | sed 's/\//\\\//g')"
+          - sed -i "s/changed_automatically_by_vib/$IMAGE_NAME_ESCAPED/g" /usr/share/abroot/abroot.json
+          - rm -rf /image-info
 
-        modules:
-          - type: shell
-            name: fsguard
-            commands:
-              - rm -rf /FsGuard ./minisign.pub ./minisign.key
-              - chmod +x /usr/sbin/init
+      - name: cleanup-a
+        type: shell
+        commands:
+          - apt-get autoremove -y
+          - apt-get clean
+          - lpkg --lock
+
+      - name: fsguard
+        type: fsguard
 
         GenerateKey: true
         CustomFsGuard: false
 
         FilelistPaths: ["/usr/bin"]
         FsGuardLocation: "/usr/sbin/FsGuard"
+
+        modules:
+          - name: remove-prev-fsguard
+            type: shell
+            commands:
+              - rm -rf /FsGuard
+              - rm -f ./minisign.pub ./minisign.key
+              - chmod +x /usr/sbin/init
+
+      - name: cleanup-b
+        type: shell
+        commands:
+          - rm -rf /tmp/*
+          - rm -rf /var/tmp/*
+          - rm -rf /sources
 
     addincludes: true
     singlelayer: false
