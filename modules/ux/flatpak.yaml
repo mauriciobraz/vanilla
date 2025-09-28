@@ -1,0 +1,8 @@
+type: shell
+name: fix-flatpak-xcompose
+commands:
+  - chmod 644 /etc/XCompose
+  - flatpak override --system --env=QT_IM_MODULE=xim
+  - flatpak override --system --env=GTK_IM_MODULE=xim
+  - flatpak override --system --env=XMODIFIERS=@im=none
+  - flatpak override --system --filesystem=/etc/.XCompose

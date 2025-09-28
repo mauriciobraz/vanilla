@@ -1,0 +1,3 @@
+type: shim
+name: jesseduffield/lazydocker
+shimtype: github-releases

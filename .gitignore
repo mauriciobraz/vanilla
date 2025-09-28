@@ -1,0 +1,6 @@
+# Ignore Vib directories
+Containerfile
+downloads/
+plugins/
+sources/
+Makefile

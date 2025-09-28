@@ -1,0 +1,3 @@
+type: shim
+name: starship/starship
+shimtype: github-releases

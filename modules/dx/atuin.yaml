@@ -1,0 +1,3 @@
+type: shim
+name: atuinsh/atuin
+shimtype: github-releases

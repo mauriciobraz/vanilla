@@ -1,0 +1,4 @@
+type: apt
+name: apt
+sources:
+  - path: modules/00-apt.inst

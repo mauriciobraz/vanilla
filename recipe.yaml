@@ -1,0 +1,55 @@
+id: Vanilla
+name: Vanilla
+
+vibversion: 1.0.0
+includespath: includes
+
+stages:
+  - id: build
+    base: ghcr.io/vanilla-os/desktop:main
+    args: { DEBIAN_FRONTEND: noninteractive }
+
+    runs:
+      commands:
+        - echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
+        - lpkg --unlock
+        - apt-get update
+        - apt-get upgrade -y
+
+    modules:
+      - type: shell
+        name: apt-get
+        commands:
+          - apt-get autoremove -y
+          - apt-get clean
+          - lpkg --lock
+
+      - type: includes
+        name: includes
+        includes:
+          - modules/00-apt.yaml
+          - modules/10-docker.yaml
+          - modules/11-tailscale.yaml
+          - modules/12-1password.yaml
+          - modules/13-zed-editor.yaml
+          - modules/14-dx-imports.yaml
+          - modules/15-ux-imports.yaml
+
+      - type: fsguard
+        name: fsguard
+
+        modules:
+          - type: shell
+            name: fsguard
+            commands:
+              - rm -rf /FsGuard ./minisign.pub ./minisign.key
+              - chmod +x /usr/sbin/init
+
+        GenerateKey: true
+        CustomFsGuard: false
+
+        FilelistPaths: ["/usr/bin"]
+        FsGuardLocation: "/usr/sbin/FsGuard"
+
+    addincludes: true
+    singlelayer: false

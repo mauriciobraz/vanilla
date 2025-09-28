@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+REPO=$(cat "$1" | jq -r '.name')
+[[ -z "$REPO" || "$REPO" == "null" ]] && echo "ERROR: Repository name required" && exit 1
+
+URL=$(curl -s "https://api.github.com/repos/${REPO}/releases/latest" \
+	| jq -r '.assets[] |
+           select(.name | test("x86_64.*linux|linux.*x86_64|amd64.*linux|linux.*amd64"; "i")) |
+           select(.name | test("\\.(tar\\.gz|tgz|zip|tar\\.xz)$")) |
+           .browser_download_url' | head -1)
+
+[[ -z "$URL" ]] && echo "ERROR: No suitable release found for ${REPO}" && exit 1
+
+BINARY_NAME=$(basename "$REPO")
+
+echo "T=\$(mktemp -d) && cd \$T && curl -sL '$URL' -o archive && \
+(case '$URL' in *.tar.gz|*.tgz) tar -xzf archive;; *.tar.xz) tar -xJf archive;; *.zip) unzip -q archive;; esac) && \
+find . -type f -executable -not -name '*.md' -not -name 'LICENSE*' -not -name '*.txt' -not -name '*.yml' -not -name '*.yaml' -not -name '*.json' \
+| grep -E '($BINARY_NAME$|/bin/)' | head -1 | xargs -I B install -m755 B /usr/local/bin/ && \
+rm -rf \$T"

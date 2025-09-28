@@ -1,0 +1,5 @@
+type: includes
+name: dx-imports
+includes:
+  - modules/ux/apps.yaml
+  - modules/ux/flatpak.yaml

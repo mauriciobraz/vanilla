@@ -1,0 +1,10 @@
+type: shell
+name: zed-editor
+commands:
+  - mkdir -p /opt/zed /usr/share/applications
+  - curl -L "https://zed.dev/api/releases/stable/latest/zed-linux-x86_64.tar.gz" -o /tmp/zed-linux-x86_64.tar.gz
+  - tar -xzf /tmp/zed-linux-x86_64.tar.gz -C /opt/zed --strip-components=1
+  - ln -sf /opt/zed/zed /usr/local/bin/zed
+  - cp /opt/zed/zed.app/share/applications/zed.desktop /usr/share/applications/dev.zed.Zed.desktop
+  - sed -i "s|Icon=zed|Icon=/opt/zed/zed.app/share/icons/hicolor/512x512/apps/zed.png|g" /usr/share/applications/dev.zed.Zed.desktop
+  - sed -i "s|Exec=zed|Exec=/usr/local/bin/zed|g" /usr/share/applications/dev.zed.Zed.desktop

@@ -1,0 +1,3 @@
+type: shim
+name: imsnif/bandwhich
+shimtype: github-releases

@@ -1,0 +1,15 @@
+type: includes
+name: dx-imports
+includes:
+  - modules/dx/atuin.yaml
+  - modules/dx/bandwhich.yaml
+  - modules/dx/dust.yaml
+  - modules/dx/eza.yaml
+  - modules/dx/glow.yaml
+  - modules/dx/lazydocker.yaml
+  - modules/dx/lazygit.yaml
+  - modules/dx/sd.yaml
+  - modules/dx/starship.yaml
+  - modules/dx/tv.yaml
+  - modules/dx/uv.yaml
+  - modules/dx/viddy.yaml
