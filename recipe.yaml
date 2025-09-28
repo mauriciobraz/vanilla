@@ -12,17 +12,14 @@ stages:
     runs:
       commands:
         - echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
-        - lpkg --unlock
-        - apt-get update
-        - apt-get upgrade -y
 
     modules:
       - type: shell
-        name: apt-get
+        name: system
         commands:
-          - apt-get autoremove -y
-          - apt-get clean
           - lpkg --lock
+          - apt-get update
+          - apt-get upgrade -y
 
       - type: includes
         name: includes
