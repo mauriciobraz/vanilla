@@ -2,7 +2,7 @@ id: Vanilla
 name: Vanilla
 
 vibversion: 1.0.0
-includespath: includes
+includespath: includes.container
 
 stages:
   - id: build
