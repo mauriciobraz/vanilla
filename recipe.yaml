@@ -17,7 +17,7 @@ stages:
       - type: shell
         name: system
         commands:
-          - lpkg --lock
+          - lpkg --unlock
           - apt-get update
           - apt-get upgrade -y
 
