@@ -1,6 +1,7 @@
 # Ignore Vib directories
 Containerfile
 downloads/
-plugins/
+plugins/*
 sources/
 Makefile
+!plugins/github-releases
