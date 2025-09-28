@@ -95,6 +95,7 @@ jobs:
     if: ${{ needs.check_update.outputs.has_updates == 'true' }}
 
     permissions:
+      contents: write
       packages: write
       id-token: write
       attestations: write
