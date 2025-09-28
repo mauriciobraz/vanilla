@@ -102,11 +102,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - run: |
-          mkdir -p plugins/
-          cp -r shims/* plugins/
-          chmod +x plugins/*
-
       - uses: vanilla-os/vib-gh-action@v1.0.2
         with:
           recipe: "recipe.yaml"
