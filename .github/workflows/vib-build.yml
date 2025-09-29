@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  CUSTOM_IMAGE_NAME: vanilla
+  CUSTOM_IMAGE_NAME: vanilla-os
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
 
 jobs:
