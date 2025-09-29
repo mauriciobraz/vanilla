@@ -5,9 +5,13 @@ on:
     branches: ["master"]
     tags:
       - "*"
+    paths-ignore:
+      - "dotfiles/**"
+  pull_request:
+    paths-ignore:
+      - "dotfiles/**"
   schedule:
     - cron: "21 */6 * * *"
-  pull_request:
   workflow_dispatch:
 
 env:

@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - "*"
+    paths-ignore:
+      - "dotfiles/**"
   workflow_dispatch:
 
 env:
