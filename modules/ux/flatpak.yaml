@@ -1,5 +1,5 @@
 type: shell
-name: fix-flatpak-xcompose
+name: flatpak
 commands:
   - chmod 644 /etc/.XCompose
   - flatpak override --system --env=QT_IM_MODULE=xim

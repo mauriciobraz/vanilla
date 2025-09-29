@@ -3,3 +3,4 @@ name: dx-imports
 includes:
   - modules/ux/apps.yaml
   - modules/ux/flatpak.yaml
+  - modules/ux/gsettings.yaml

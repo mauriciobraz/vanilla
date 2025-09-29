@@ -1,0 +1,11 @@
+auto_sync = false
+enter_accept = false
+exit_mode = "return-query"
+inline_height = 6
+search_mode = "fuzzy"
+secrets_filter = true
+style = "compact"
+update_check = false
+
+[sync]
+records = true

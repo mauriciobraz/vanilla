@@ -1,0 +1,144 @@
+{
+  "show_edit_predictions": true,
+  "languages": {
+    "C++": {
+      "tab_size": 2,
+      "formatter": "language_server",
+      "format_on_save": "off"
+    },
+    "TOML": {
+      "formatter": [
+        {
+          "external": {
+            "command": "tombi",
+            "arguments": ["format", "-"]
+          }
+        }
+      ],
+      "language_servers": ["tombi"]
+    },
+    "Python": {
+      "formatter": [
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        },
+        {
+          "code_actions": {
+            "source.fixAll.ruff": true,
+            "source.organizeImports.ruff": true
+          }
+        }
+      ],
+      "format_on_save": "on",
+      "language_servers": ["basedpyright", "ruff"]
+    },
+    "Shell Script": {
+      "formatter": {
+        "external": {
+          "command": "shfmt",
+          "arguments": ["-bn", "-ci", "-sr", "-i", "0"]
+        }
+      },
+      "format_on_save": "on"
+    }
+  },
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "telemetry": {
+    "metrics": false,
+    "diagnostics": false
+  },
+  "formatter": "auto",
+  "format_on_save": "on",
+  "edit_predictions": {
+    "mode": "eager"
+  },
+  "show_completions_on_input": true,
+  "minimap": {
+    "show": "always"
+  },
+  "theme": {
+    "mode": "dark",
+    "dark": "VSCode Dark Modern",
+    "light": "VSCode Dark Modern"
+  },
+  "icon_theme": "Material Icon Theme",
+  "wrap_guides": [80, 100, 120],
+  "ui_font_size": 12.5,
+  "ui_font_family": "Maple Mono NF",
+  "buffer_font_size": 12.5,
+  "buffer_font_family": "Maple Mono NF",
+  "lsp_document_colors": "background",
+  "terminal": {
+    "dock": "bottom",
+    "detect_venv": "off",
+    "line_height": "standard",
+    "default_height": 300
+  },
+  "agent": {
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
+    },
+    "dock": "left",
+    "default_width": 300
+  },
+  "git_panel": {
+    "dock": "left",
+    "default_width": 300
+  },
+  "chat_panel": {
+    "dock": "left",
+    "default_width": 300
+  },
+  "outline_panel": {
+    "dock": "left",
+    "default_width": 300
+  },
+  "project_panel": {
+    "dock": "right",
+    "default_width": 300,
+    "auto_reveal_entries": true
+  },
+  "notification_panel": {
+    "dock": "left",
+    "button": false,
+    "default_width": 300
+  },
+  "file_types": {
+    "env": [".env", ".env.template"],
+    "Shell Script": [".envrc", ".sh", ".bash"]
+  },
+  "collaboration_panel": {
+    "dock": "left",
+    "button": false,
+    "default_width": 300
+  },
+  "auto_install_extensions": {
+    "env": true,
+    "ini": true,
+    "csv": true,
+    "log": true,
+    "toml": true,
+    "sql": true,
+    "xml": true,
+    "html": true,
+    "http": true,
+    "fish": true,
+    "basher": true,
+    "make": true,
+    "ruff": true,
+    "cspell": true,
+    "wakatime": true,
+    "dockerfile": true,
+    "docker-compose": true,
+    "github-actions": true,
+    "color-highlight": true,
+    "discord-presence": true,
+    "material-icon-theme": true
+  },
+  "file_scan_exclusions": [".git/", ".venv/", "__pycache__"]
+}

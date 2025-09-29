@@ -1,0 +1,11 @@
+type: shell
+name: gsettings
+commands:
+  # Theme
+  - gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
+  - gsettings set org.gnome.desktop.interface icon-theme "Neuwaita"
+  - gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+  # Fonts
+  - gsettings set org.gnome.desktop.interface font-name "Adwaita Sans 11"
+  - gsettings set org.gnome.desktop.interface text-scaling-factor 0.97
+  - gsettings set org.gnome.desktop.interface monospace-font-name "Maple Mono NF 10"

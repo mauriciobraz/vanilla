@@ -1,0 +1,12 @@
+[
+  {
+    "bindings": {
+      "ctrl-l": "project_panel::CollapseAllEntries",
+      "ctrl-p": [
+        "task::Spawn",
+        { "task_name": "File Finder", "reveal_target": "center" }
+      ],
+      "shift-f": "editor::FormatSelections"
+    }
+  }
+]
