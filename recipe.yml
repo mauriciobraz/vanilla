@@ -25,8 +25,31 @@ stages:
       - name: modules
         type: includes
         includes:
+          - modules/01-1password.yml
+          - modules/02-vos-opt-symlink.yml
           - modules/990-nvidia-driver.yml
           - modules/995-nvidia-systemd.yml
+
+      - name: vanilla-tools
+        type: shell
+
+        source:
+          type: tar
+          url: https://github.com/Vanilla-OS/vanilla-tools/releases/download/v1.0.0/vanilla-tools.tar.gz
+          checksum: 0e1d92d9c9154f9a115e97b40ff692afa52ddd0d9f770a8ec67440bf1a48aa72
+
+        commands:
+          - mkdir -p /usr/bin
+          - cp /sources/vanilla-tools/vanilla-tools/nrun /usr/bin/nrun
+          - cp /sources/vanilla-tools/vanilla-tools/prime-switch /usr/bin/prime-switch
+          - chmod +x /usr/bin/nrun
+          - chmod +x /usr/bin/prime-switch
+
+      - name: enable-wayland
+        type: shell
+        commands:
+          - mkdir -p /etc/udev/rules.d
+          - ln -s /dev/null /etc/udev/rules.d/61-gdm.rules
 
       - name: prune-packages
         type: shell

@@ -1,0 +1,11 @@
+[Unit]
+Description=Create symbolic links for directories in /opt/ (Vanilla OS workaround - see https://github.com/Vanilla-OS/ABRoot/issues/221)
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/vos-opt-symlink
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
