@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://www.schemastore.org/any.json
+
+id: vanilla-oci
+name: Vanilla OCI
+vibversion: 1.0.6
+
+stages:
+  - id: system
+    base: ghcr.io/vanilla-os/desktop:main
+
+    args:
+      DEBIAN_FRONTEND: noninteractive
+
+    runs:
+      commands:
+        - echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
+
+    modules:
+      - name: setup
+        type: shell
+        commands:
+          - lpkg --unlock
+          - apt-get update
+
+      - name: modules
+        type: includes
+        includes:
+          - modules/990-nvidia-driver.yml
+          - modules/995-nvidia-systemd.yml
+
+      - name: prune-packages
+        type: shell
+        commands:
+          - apt autoremove -y
+          - apt clean
+          - apt remove -y zutty gnome-shell-extension-prefs
+          - SUDO_FORCE_REMOVE=yes apt purge -y sudo
+          - lpkg --lock
+          - rm -f /etc/apt/sources.list.d/nvidia-drivers.list
+
+      - name: fsguard
+        type: fsguard
+
+        GenerateKey: true
+        CustomFsGuard: false
+
+        FilelistPaths: ["/usr/bin"]
+        FsGuardLocation: "/usr/sbin/FsGuard"
+
+        modules:
+          - name: clean-fsguard
+            type: shell
+            commands:
+              - rm -rf /FsGuard
+              - rm -f ./minisign.pub ./minisign.key
+              - chmod +x /usr/sbin/init
+
+      - name: purge-temp
+        type: shell
+        commands:
+          - rm -rf /tmp/*
+          - rm -rf /var/tmp/*
