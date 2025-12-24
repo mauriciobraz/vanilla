@@ -1,0 +1,7 @@
+name: fish
+type: shell
+commands:
+  - apt-get update && apt-get install -y fish
+  - grep -qxF "/usr/bin/fish" /etc/shells || echo "/usr/bin/fish" >> /etc/shells
+  - sed -i 's|^SHELL=.*|SHELL=/usr/bin/fish|' /etc/default/useradd
+  - chsh -s /usr/bin/fish root

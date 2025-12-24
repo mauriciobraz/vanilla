@@ -30,6 +30,7 @@ stages:
         type: includes
         includes:
           - modules/01-1password.yml
+          - modules/02-fish.yml
           - modules/990-nvidia-driver.yml
           - modules/995-nvidia-systemd.yml
 
@@ -39,6 +40,9 @@ stages:
         commands:
           - chmod +x /usr/bin/nrun
           - chmod +x /usr/bin/prime-switch
+
+      - name: vos-opt-symlink
+        type: shell
           - chmod +x /usr/bin/vos-opt-symlink
           - systemctl enable vos-opt-symlink.service
 
@@ -47,6 +51,11 @@ stages:
         commands:
           - mkdir -p /etc/udev/rules.d
           - ln -s /dev/null /etc/udev/rules.d/61-gdm.rules
+
+      - name: mask-network-manager
+        type: shell
+        commands:
+          - systemctl mask NetworkManager-wait-online.service
 
       - name: prune-packages
         type: shell
