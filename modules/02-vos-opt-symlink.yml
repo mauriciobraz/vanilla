@@ -1,5 +1,0 @@
-name: vos-opt-symlink
-type: shell
-commands:
-  - chmod +x /usr/bin/vos-opt-symlink
-  - systemctl enable vos-opt-symlink.service

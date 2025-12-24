@@ -15,18 +15,21 @@ stages:
       commands:
         - echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
 
+    addincludes: true
+    singlelayer: false
+
     modules:
       - name: setup
         type: shell
         commands:
           - lpkg --unlock
           - apt-get update
+          - ls /etc/1password
 
       - name: modules
         type: includes
         includes:
           - modules/01-1password.yml
-          - modules/02-vos-opt-symlink.yml
           - modules/990-nvidia-driver.yml
           - modules/995-nvidia-systemd.yml
 
@@ -44,6 +47,13 @@ stages:
           - cp /sources/vanilla-tools/vanilla-tools/prime-switch /usr/bin/prime-switch
           - chmod +x /usr/bin/nrun
           - chmod +x /usr/bin/prime-switch
+
+      - name: ops-symlink
+        type: shell
+
+        commands:
+          - chmod +x /usr/bin/vos-opt-symlink
+          - systemctl enable vos-opt-symlink.service
 
       - name: enable-wayland
         type: shell
