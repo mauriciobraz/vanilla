@@ -1,0 +1,13 @@
+# https://github.com/CachyOS/CachyOS-Settings/blob/master/usr/lib/udev/rules.d/60-ioschedulers.rules
+
+# HDD: use BFQ for better interactive performance
+ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{queue/rotational}=="1", \
+    ATTR{queue/scheduler}="bfq"
+
+# SSD (SATA/eMMC): use mq-deadline for low latency
+ACTION=="add|change", KERNEL=="sd[a-z]*|mmcblk[0-9]*", ATTR{queue/rotational}=="0", \
+    ATTR{queue/scheduler}="mq-deadline"
+
+# NVMe SSD: use none (passthrough) as NVMe handles queuing internally
+ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/rotational}=="0", \
+    ATTR{queue/scheduler}="none"

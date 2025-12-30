@@ -1,7 +1,7 @@
 name: nvidia-driver
 type: shell
 commands:
-  - apt-mark hold nvidia-kernel-open nvidia-driver nvidia-vaapi-driver nvidia-settings nvidia-persistenced nvidia-smi libnvidia-cfg1 libnvidia-glcore libnvidia-glvkspirv libnvidia-gpucomp libnvidia-fbc1 nvidia-container-toolkit
+  - apt-mark hold nvidia-kernel-open nvidia-driver nvidia-vaapi-driver nvidia-settings nvidia-persistenced libnvidia-cfg1 libnvidia-glcore libnvidia-glvkspirv libnvidia-gpucomp libnvidia-fbc1 nvidia-container-toolkit
 
 modules:
   - name: install-nvidia
